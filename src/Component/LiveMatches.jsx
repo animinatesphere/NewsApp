@@ -3,25 +3,42 @@ import axios from "axios";
 import "../CSS/liveMatches.css";
 import Navbar from "./Navbar";
 
+const leagues = [
+  "English Premier League",
+  "La Liga",
+  "Serie A",
+  "Bundesliga",
+  "Ligue 1",
+];
+
 const LiveMatches = () => {
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchMatches();
-    const interval = setInterval(fetchMatches, 30000); // Refresh every 30s
+    fetchAllLeagues();
+    const interval = setInterval(fetchAllLeagues, 30000); // Refresh every 30s
     return () => clearInterval(interval);
   }, []);
 
-  const fetchMatches = async () => {
+  const fetchAllLeagues = async () => {
     setLoading(true);
     setError(null);
+    let allMatches = [];
+
     try {
-      const response = await axios.get(
-        "https://www.thesportsdb.com/api/v1/json/1/events.php?l=English%20Premier%20League"
-      );
-      setMatches(response.data.events || []);
+      for (const league of leagues) {
+        const response = await axios.get(
+          `https://www.thesportsdb.com/api/v1/json/1/events.php?l=${encodeURIComponent(
+            league
+          )}`
+        );
+        if (response.data.events) {
+          allMatches = [...allMatches, ...response.data.events];
+        }
+      }
+      setMatches(allMatches);
     } catch (err) {
       setError("Failed to fetch live matches. Please try again later.");
       console.error("Error fetching live matches:", err);
@@ -34,7 +51,7 @@ const LiveMatches = () => {
       <Navbar />
       <div className="live-matches-container">
         <h2>Live Matches</h2>
-        <button className="refresh-button" onClick={fetchMatches}>
+        <button className="refresh-button" onClick={fetchAllLeagues}>
           Refresh
         </button>
 
@@ -50,6 +67,7 @@ const LiveMatches = () => {
                   <p className="match-date">
                     {match.dateEvent} | {match.strTime}
                   </p>
+                  <p className="league-name">{match.strLeague}</p>
                 </div>
                 <div className="match-teams">
                   <div className="team">
