@@ -5,12 +5,14 @@
 }
 /* Navbar container */
 .navbar {
+  position: fixed;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #333;
-  padding: 15px 20px;
+  padding: 15px 30px;
   color: white;
+  width: 100%;
 }
 
 /* Logo styling */

@@ -1,94 +1,90 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import "../CSS/liveMatches.css";
-import Navbar from "./Navbar";
-
-const leagues = [
-  "English Premier League",
-  "La Liga",
-  "Serie A",
-  "Bundesliga",
-  "Ligue 1",
-];
+import Navbar from "../Component/Navbar";
 
 const LiveMatches = () => {
   const [matches, setMatches] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const API_KEY =
+    "ae94c4b7def46459fe9e182bc9107504297e7199fac028bebed4da155a0ec3c3"; // Replace with your API key
+  const SOCKET_URL = `wss://wss.apifootball.com/livescore?WidgetKey=${API_KEY}&timezone=+03:00`;
+
   useEffect(() => {
-    fetchAllLeagues();
-    const interval = setInterval(fetchAllLeagues, 30000); // Refresh every 30s
-    return () => clearInterval(interval);
-  }, []);
+    let socket = new WebSocket(SOCKET_URL);
 
-  const fetchAllLeagues = async () => {
-    setLoading(true);
-    setError(null);
-    let allMatches = [];
+    socket.onopen = () => {
+      console.log("WebSocket Connected!");
+    };
 
-    try {
-      for (const league of leagues) {
-        const response = await axios.get(
-          `https://www.thesportsdb.com/api/v1/json/1/events.php?l=${encodeURIComponent(
-            league
-          )}`
-        );
-        if (response.data.events) {
-          allMatches = [...allMatches, ...response.data.events];
+    socket.onmessage = (event) => {
+      try {
+        if (event.data.startsWith("{") || event.data.startsWith("[")) {
+          // Only parse if the message is JSON
+          const data = JSON.parse(event.data);
+          if (data && data.length > 0) {
+            setMatches(data.filter((match) => match.match_live === "1")); // Filter live matches
+          }
+        } else {
+          console.log("Non-JSON message received:", event.data);
         }
+      } catch (err) {
+        console.error("Error parsing WebSocket message:", err);
+        setError("Error receiving live match data.");
       }
-      setMatches(allMatches);
-    } catch (err) {
-      setError("Failed to fetch live matches. Please try again later.");
-      console.error("Error fetching live matches:", err);
-    }
-    setLoading(false);
-  };
+    };
+
+    socket.onerror = (err) => {
+      console.error("WebSocket Error:", err);
+      setError("WebSocket connection error.");
+    };
+
+    socket.onclose = () => {
+      console.log("WebSocket Disconnected.");
+    };
+
+    return () => {
+      socket.close();
+    };
+  }, []);
 
   return (
     <>
       <Navbar />
       <div className="live-matches-container">
         <h2>Live Matches</h2>
-        <button className="refresh-button" onClick={fetchAllLeagues}>
-          Refresh
-        </button>
-
-        {loading ? (
-          <div className="loading-spinner"></div>
-        ) : error ? (
-          <p className="error-message">{error}</p>
-        ) : matches.length > 0 ? (
+        {error && <p className="error-message">{error}</p>}
+        {matches.length > 0 ? (
           <div className="matches-grid">
             {matches.map((match) => (
-              <div key={match.idEvent} className="match-card">
+              <div key={match.match_id} className="match-card">
                 <div className="match-header">
                   <p className="match-date">
-                    {match.dateEvent} | {match.strTime}
+                    {match.match_date} | {match.match_time}
                   </p>
-                  <p className="league-name">{match.strLeague}</p>
+                  <p className="league-name">{match.league_name}</p>
                 </div>
                 <div className="match-teams">
                   <div className="team">
                     <img
-                      src={match.strThumb || "default_home_logo.png"}
-                      alt={match.strHomeTeam}
+                      src={match.team_home_badge || "default_home_logo.png"}
+                      alt={match.match_hometeam_name}
                     />
-                    <p>{match.strHomeTeam}</p>
+                    <p>{match.match_hometeam_name}</p>
                   </div>
                   <p className="score">
-                    {match.intHomeScore || "?"} - {match.intAwayScore || "?"}
+                    {match.match_hometeam_score ?? "?"} -{" "}
+                    {match.match_awayteam_score ?? "?"}
                   </p>
                   <div className="team">
                     <img
-                      src={match.strThumb || "default_away_logo.png"}
-                      alt={match.strAwayTeam}
+                      src={match.team_away_badge || "default_away_logo.png"}
+                      alt={match.match_awayteam_name}
                     />
-                    <p>{match.strAwayTeam}</p>
+                    <p>{match.match_awayteam_name}</p>
                   </div>
                 </div>
-                <p className="venue">Venue: {match.strVenue || "Unknown"}</p>
+                <p className="venue">Venue: {match.venue_name || "Unknown"}</p>
               </div>
             ))}
           </div>
