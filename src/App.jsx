@@ -21,16 +21,16 @@ function App() {
       {/* <Route path="/" element={<Homepage />} /> */}
 
       <Route path="/" element={<Homepage />} />
-      <Route path="/Usa-News" element={<Usa />} />
-      <Route path="/China-News" element={<China />} />
-      <Route path="/India-News" element={<India />} />
-      <Route path="/Nigeria-News" element={<Nigeria />} />
-      <Route path="/Ukraine-News" element={<Ukraine />} />
-      <Route path="/Japan-News" element={<Japan />} />
-      <Route path="/Argentina-News" element={<Argentina />} />
-      <Route path="/Apple-News" element={<Apple />} />
-      <Route path="/Tesla-News" element={<Tesla />} />
-      <Route path="/TechCrunch-News" element={<TechCrunch />} />
+      <Route path="/Usa" element={<Usa />} />
+      <Route path="/China" element={<China />} />
+      <Route path="/India" element={<India />} />
+      <Route path="/Nigeria" element={<Nigeria />} />
+      <Route path="/Ukraine" element={<Ukraine />} />
+      <Route path="/Japan" element={<Japan />} />
+      <Route path="/Argentina" element={<Argentina />} />
+      <Route path="/Apple" element={<Apple />} />
+      <Route path="/Tesla" element={<Tesla />} />
+      <Route path="/TechCrunch" element={<TechCrunch />} />
     </Routes>
   );
 }

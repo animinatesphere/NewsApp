@@ -6,22 +6,22 @@ export const Navbar2 = () => {
     <>
       <ul className="navs-links">
         <li>
-          <a href="/Usa-News">US</a>
+          <a href="/Usa">US</a>
         </li>
         <li>
-          <a href="/China-News">China</a>
+          <a href="/China">China</a>
         </li>
         <li>
-          <a href="/India-News">India</a>
+          <a href="/India">India</a>
         </li>
         <li>
-          <a href="/Nigeria-News">Nigeria</a>
+          <a href="/Nigeria">Nigeria</a>
         </li>
         <li>
-          <a href="/Ukraine-News">Ukraine</a>
+          <a href="/Ukraine">Ukraine</a>
         </li>
         <li>
-          <a href="/Japan-News">Japan</a>
+          <a href="/Japan">Japan</a>
         </li>
         <li>
           <a href="/Argentina">Argentina</a>

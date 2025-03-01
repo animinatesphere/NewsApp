@@ -35,16 +35,16 @@ const Navbar = () => {
             <a href="/">Home</a>
           </li>
           <li>
-            <a href="/Usa-News">News</a>
+            <a href="/Usa">News</a>
           </li>
           <li>
-            <a href="/Apple-News">Apple</a>
+            <a href="/Apple">Apple</a>
           </li>
           <li>
-            <a href="/Tesla-News">Tesla</a>
+            <a href="/Tesla">Tesla</a>
           </li>
           <li>
-            <a href="/TechCrunch-News"> TechCrunch</a>
+            <a href="/TechCrunch"> TechCrunch</a>
           </li>
         </ul>
 
