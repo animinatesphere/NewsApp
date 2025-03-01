@@ -27,7 +27,7 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <div className="logo">NewsApp</div>
+      <div className="logo">LiveLens👀</div>
 
       <div className="search-container">
         <ul className="nav-links">
