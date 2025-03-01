@@ -24,7 +24,7 @@ const Usa = () => {
           `https://newsapi.org/v2/top-headlines?country=us&category=health&apiKey=854f16bf1e2148789bbb2740d127db07`
         );
         const res6 = await axios.get(
-          `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=854f16bf1e2148789bbb2740d127db077`
+          `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=854f16bf1e2148789bbb2740d127db07`
         );
         getNews([
           ...res1.data.articles,
