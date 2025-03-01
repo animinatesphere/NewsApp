@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 // import NewArticle from "./pages/NewArticle";
-// import Homepage from "./pages/Homepage";
-import HomePage2 from "./Component/Homepage2";
+import Homepage from "./pages/Homepage";
+// import HomePage2 from "./Component/Homepage2";
 import Usa from "./New-speech/usa";
 import China from "./New-speech/China";
 import { Apple } from "./pages/Apple";
@@ -19,7 +19,7 @@ function App() {
     <Routes>
       {/* <Route path="/" element={<Homepage />} /> */}
 
-      <Route path="/Homes" element={<HomePage2 />} />
+      <Route path="/Homes" element={<Homepage />} />
       <Route path="/Usa-News" element={<Usa />} />
       <Route path="/China-News" element={<China />} />
       <Route path="/India-News" element={<India />} />
