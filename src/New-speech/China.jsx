@@ -1,8 +1,8 @@
 // import React from "react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Navbar from "../Component/Navbar";
-import { Navbar2 } from "../Component/Navbar2";
+import Navbar from "../component/Navbar";
+import { Navbar2 } from "../component/Navbar2";
 
 const China = () => {
   const [news, getNews] = useState([]);

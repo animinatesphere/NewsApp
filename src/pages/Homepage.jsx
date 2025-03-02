@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../Component/Navbar";
+import Navbar from "../component/Navbar";
 import { Link } from "react-router-dom";
 import "../CSS/Home.css"; // Import updated CSS
 

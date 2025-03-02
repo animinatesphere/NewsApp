@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "../CSS/new.css";
-import Navbar from "../Component/Navbar";
+import Navbar from "./Navbar";
 // import Navbar from "../Component/Navbar";
 
 const Tesla = () => {
